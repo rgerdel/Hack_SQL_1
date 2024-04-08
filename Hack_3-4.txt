@@ -1,0 +1,62 @@
+create table countries(
+  id_country serial primary key,
+  name varchar(50) not null  
+);
+
+create table priorities(
+  id_priority serial primary key,
+  type_name varchar(50) not null  
+);
+
+create table contact_request(
+  id_email varchar (100) primary key,
+  id_country integer not null,
+  id_priority integer not null,
+  name varchar(50) not null,
+  detail text not null,
+  physical_address text not null,
+  foreign key (id_country) references countries (id_country),
+  foreign key (id_priority) references priorities (id_priority)
+);
+
+create table users(
+ id_users serial primary key,
+ id_country integer not null,
+ email varchar(100) not null,
+ name varchar (50) not null,
+ foreign key (id_country) references countries (id_country)   
+);
+
+-- insert 5 record in countries
+insert into countries (name) values
+('España'),
+('Argentina'),
+('Brasil'),
+('Portugal'),
+('Venezuela');
+select * from countries;
+-- insert 3 record in priorities
+insert into priorities (type_name) values
+('Baja'),
+('Media'),
+('Alta');
+select * from priorities;
+--insert 3 record in contact_request
+insert into contact_request (id_email,id_country,id_priority,name,detail,physical_address) values
+('rafaelgerdel@gmail.com',5,3,'Rafael','Caracas', 'Oripoto, El Hatillo'),
+('domenicogerdel@gmail.com',1,2,'Domenico','Madrid', 'Sanchinarro'),
+('adignazi@gmail.com',3,1,'Alexandra','Rio de Janeiro', 'Rio');
+select * from contact_request;
+
+
+insert into users (id_country, email, name) 
+  values (2, 'foo@foo.com', 'fooziman'), (3, 'bar@bar.com', 'barziman'); 
+select * from users;
+
+-- delete last user:
+delete  from users where email = 'foo@foo.com';
+select * from users;
+
+update users set id_country = 1, email = 'prueba@prueba.com' where id_users= 2;
+select * from users;
+
